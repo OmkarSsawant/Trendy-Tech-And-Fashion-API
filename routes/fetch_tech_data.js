@@ -9,19 +9,22 @@ const mongoose = require('mongoose');
 router.get('/:category', async (req, res) => {
     console.time(req.params.category + " Updation Duration @ ")
     const { category } = req.params
-    const { page } = req.query
-    const apiUrl = routeToUrl(category, page || 1)
+    let { page } = req.query
+    page = parseInt(page) || 1
+    console.log(page);
+    const apiUrl = routeToUrl(category, page)
     console.log("Made Request To", apiUrl);
     try {
         const apiRes = await axios.get(apiUrl)
-        console.log(apiRes.data.data)
+        // console.log(apiRes.data.data)
         const TechArticle = mongoose.model(category, TechArticleSchema)
 
         if (page == 1)
             await TechArticle.collection.deleteMany({})
-
-        await TechArticle.collection.insertMany(apiRes.data.data)
-
+        if (apiRes.data.pagination.count != 0)
+            await TechArticle.collection.insertMany(apiRes.data.data)
+        else
+            res.end("Done!")
         res.send(`<center> <h1> Updated/Intilized  ${req.params.category} on Server </h1> </center>`)
     } catch (e) {
         console.log("THERE ERORRRRRRRRRR");
