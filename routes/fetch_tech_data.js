@@ -19,10 +19,19 @@ router.get('/:category', async (req, res) => {
         // console.log(apiRes.data.data)
         const TechArticle = mongoose.model(category, TechArticleSchema)
 
-        if (page == 1)
+        if (page == 1) {
+            let firstDoc = await TechArticle.collection.findOne({})
+            if (firstDoc.title == apiRes.data.data[0].title) {
+                //API is not updated 
+                res.end("<h1> API is Upto-Date </h1>")
+                return
+            }
             await TechArticle.collection.deleteMany({})
-        if (apiRes.data.pagination.count != 0)
-            await TechArticle.collection.insertMany(apiRes.data.data)
+
+        } if (apiRes.data.pagination.count != 0)
+            await TechArticle.collection.insertMany(apiRes.data.data, {
+                ordered: true
+            })
         else
             res.end("Done!")
         res.send(`<center> <h1> Updated/Intilized  ${req.params.category} on Server </h1> </center>`)

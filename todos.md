@@ -1,4 +1,4 @@
-> Prevent tech collections Update If nothing is updated at page 1 od mediastack-api
+> Prevent tech collections Update If nothing is updated at page 1 of mediastack-api
 
 > optimize queries to get specific results
 

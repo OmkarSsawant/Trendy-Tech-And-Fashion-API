@@ -15,40 +15,24 @@ router.get('/home', (req, res) => res.end("<center> <h1> <b> Welcome To  API <b>
 router.use('/intialize', apiDataFetcher)
 
 
-async function fetchCategory(category) {
-    for (let i = 1; i <= 4; i++) {
-        const url = `http://localhost:8000/api/tech/intialize/${category}?page=${i}`
-        await axios.get(url)
-    }
+async function fetchCategory(category, page) {
+    const url = `http://localhost:8000/api/tech/intialize/${category}?page=${page}`
+    await axios.get(url)
 }
 
 router.get('/intialize-all', async (req, res) => {
 
-    // res.send('<center><h1>Fetching Categories : Status</h1></center> <ul>')
-
     try {
-        await fetchCategory('mobile')
-        // res.send('<li> Fetched mobile </li>')
+        await fetchCategory('mobile', 1)
         console.log("Fetched Mobile");
-        await fetchCategory('laptop-pc')
-        // res.send('<li> Fetched laptop-pc </li>')
+        await fetchCategory('laptop-pc', 1)
         console.log("Fetched Laptop-PC");
-
-        await fetchCategory('hardware')
-        // res.send('<li> Fetched hardware </li>')
+        await fetchCategory('hardware', 1)
         console.log("Fetched hardware");
-
-        await fetchCategory('ai')
-        // res.send('<li> Fetched ai </li>')
+        await fetchCategory('ai', 1)
         console.log("Fetched ai");
-
-
-        await fetchCategory('electronics')
-        // res.send('<li> Fetched electronics </li>')
+        await fetchCategory('electronics', 1)
         console.log("Fetched electronics");
-
-        // res.send("</ul>")
-
         res.end("<h1> All News Data is Upto-date </h1>")
     } catch (e) {
         console.error(e);
