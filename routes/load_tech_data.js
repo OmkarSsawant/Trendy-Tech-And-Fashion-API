@@ -3,7 +3,7 @@ const router = require('express').Router()
 const TechArticleSchema = require('../data/article');
 const mongoose = require('mongoose');
 const { default: axios } = require('axios');
-
+const API_PAGE_REQ_LIMIT = 7
 router.get('/:category', async (req, res) => {
     const { category } = req.params
     let { page, limit } = req.query
@@ -16,9 +16,8 @@ router.get('/:category', async (req, res) => {
         .limit(limit)
     var count = await cur.count()
 
-    if (page < 5 && count == 0) {
+    if (count == 0 && page < API_PAGE_REQ_LIMIT) {
         //More data could be loaded
-        //current loadSize is 400 `page=1   -  page=4`
         const url = `http://localhost:8000/api/tech/intialize/${category}?page=${page}`
         await axios.get(url)
         cur.close()

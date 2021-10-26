@@ -1,8 +1,9 @@
-> Prevent tech collections Update If nothing is updated at page 1 of mediastack-api
 
-> optimize queries to get specific results
+> optimize more queries to get specific results
 
-> integrate affiliate api here
+> schedule intilize job before deploy 
 
-> integrate product comparison api
+> integrate affiliate api here --in-update
+
+> integrate product comparison api --in-update
 

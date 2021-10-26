@@ -15,23 +15,23 @@ router.get('/home', (req, res) => res.end("<center> <h1> <b> Welcome To  API <b>
 router.use('/intialize', apiDataFetcher)
 
 
-async function fetchCategory(category, page) {
-    const url = `http://localhost:8000/api/tech/intialize/${category}?page=${page}`
-    await axios.get(url)
+async function fetchCategory(category, ...pages) {
+    pages.forEach(async page => {
+        const url = `http://localhost:8000/api/tech/intialize/${category}?page=${page}`
+        await axios.get(url)
+    })
 }
 
 router.get('/intialize-all', async (req, res) => {
 
     try {
-        await fetchCategory('mobile', 1)
+        await fetchCategory('mobile', 1, 2)
         console.log("Fetched Mobile");
-        await fetchCategory('laptop-pc', 1)
+        await fetchCategory('laptop-pc', 1, 2)
         console.log("Fetched Laptop-PC");
-        await fetchCategory('hardware', 1)
-        console.log("Fetched hardware");
-        await fetchCategory('ai', 1)
+        await fetchCategory('ai', 1, 2)
         console.log("Fetched ai");
-        await fetchCategory('electronics', 1)
+        await fetchCategory('electronics', 1, 2)
         console.log("Fetched electronics");
         res.end("<h1> All News Data is Upto-date </h1>")
     } catch (e) {

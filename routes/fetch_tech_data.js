@@ -29,7 +29,8 @@ router.get('/:category', async (req, res) => {
             await TechArticle.collection.deleteMany({})
 
         } if (apiRes.data.pagination.count != 0)
-            await TechArticle.collection.insertMany(apiRes.data.data, {
+            await TechArticle.collection.insertMany(new Array(apiRes.data.data)
+                .filter(article => article.image != null), {
                 ordered: true
             })
         else
